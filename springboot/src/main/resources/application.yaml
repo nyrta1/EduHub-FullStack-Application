@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: EduHub
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/eduhub
+    username: postgres
+    password: nurik05
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  session:
+    store-type: jdbc
+    jdbc:
+      initialize-schema: always
