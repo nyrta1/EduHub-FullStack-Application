@@ -14,3 +14,9 @@ spring:
     store-type: jdbc
     jdbc:
       initialize-schema: always
+
+
+logging:
+  level:
+    org.springframework.security.web: TRACE
+    org.springframework.security.authentication: DEBUG
