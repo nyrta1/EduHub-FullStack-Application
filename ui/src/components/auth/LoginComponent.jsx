@@ -18,17 +18,17 @@ export const LoginComponent = () => {
                 </div>
             </div>
 
-            <div className="untree_co-section ">
+            <div className="untree_co-section mt-5">
                 <div className="container">
                     <div className="row mb-5 justify-content-center">
                         <div className="col-lg-5 mx-auto order-1" data-aos="fade-up" data-aos-delay="200">
-                            <form action="#" className="form-box">
+                            <form action="http://localhost:8080/auth/login" method="post" className="form-box">
                                 <div className="row">
                                     <div className="col-12 mb-3">
-                                        <input type="text" className="form-control" placeholder="Email"/>
+                                        <input name="username" type="text" className="form-control" placeholder="UserName"/>
                                     </div>
                                     <div className="col-12 mb-3">
-                                        <input type="password" className="form-control" placeholder="Password"/>
+                                        <input name="password" type="password" className="form-control" placeholder="Password"/>
                                     </div>
 
                                     <div className="col-12 mb-3">
