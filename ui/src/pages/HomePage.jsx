@@ -1,7 +1,6 @@
 import {NavbarComponent} from "../components/NavbarComponent.jsx";
 import {HeroComponent} from "../components/home/HeroComponent.jsx";
 import {FooterComponent} from "../components/FooterComponent.jsx";
-import {LoaderComponent} from "../components/LoaderComponent.jsx";
 import {CategoryComponent} from "../components/home/CategoryComponent.jsx";
 import {ServicesSectionComponent} from "../components/home/ServicesSectionComponent.jsx";
 import {EducationComponent} from "../components/home/EducationComponent.jsx";
@@ -25,7 +24,6 @@ export const HomePage = () => {
             <FeedBackComponent />
             <ChooseUsComponent />
             <FooterComponent />
-            <LoaderComponent />
         </>
     )
 }

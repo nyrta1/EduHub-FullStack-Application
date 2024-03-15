@@ -1,8 +1,8 @@
 import {useContext, useEffect, useState} from "react";
-import {AuthContext} from "./auth/AuthContext.jsx";
+import AuthContext from "./context/AuthContext.jsx";
 
 export const NavbarComponent = () => {
-    const { isAuthenticatedRef } = useContext(AuthContext);
+    const { authenticated } = useContext(AuthContext);
     const [scrolled, setScrolled] = useState(false);
 
     useEffect(() => {
@@ -44,7 +44,8 @@ export const NavbarComponent = () => {
                                     className="d-none d-lg-inline-block">info@mydomain.com</span></a>
                             </div>
 
-                            {isAuthenticatedRef.current ? (
+                            {authenticated.user ? (
+                                // if the user authenticated
                                 <div className="col-6 col-lg-3 text-right">
                                     <a href="/auth/logout" className="small mr-3">
                                         <span className="icon-remove"></span>
@@ -52,6 +53,7 @@ export const NavbarComponent = () => {
                                     </a>
                                 </div>
                             ) : (
+                                // if the user not authenticated
                                 <div className="col-6 col-lg-3 text-right">
                                     <a href="/auth/login" className="small mr-3">
                                         <span className="icon-lock"></span>
@@ -76,11 +78,6 @@ export const NavbarComponent = () => {
 
                             <ul className="js-clone-nav d-none d-lg-inline-block site-menu">
                                 <li className="active"><a href="/">Home</a></li>
-                                <li><a href="/staff">Our Staff</a></li>
-                                <li><a href="/news">News</a></li>
-                                <li><a href="/gallery">Gallery</a></li>
-                                <li><a href="/about">About</a></li>
-                                <li><a href="/contact">Contact</a></li>
                             </ul>
 
                             <a href="/" className="btn-book btn btn-secondary btn-sm menu-absolute">Enroll Now</a>

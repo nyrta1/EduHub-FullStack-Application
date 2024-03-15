@@ -7,17 +7,12 @@ export async function login(username, password) {
     formData.append('password', password);
 
     try {
-        const response = await axios.post('http://localhost:8080/auth/login', formData, {
+        return await axios.post('http://localhost:8080/auth/login', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             },
             withCredentials: true,
         });
-
-        if (response.status === 200) {
-            // If the user authenticated successfully, then it will redirect to home page
-            // window.location.replace("http://localhost:5173/")
-        }
     } catch (err) {
         console.error('Error occurred during login:', err);
         alert('Error occurred during login:'+ err)
