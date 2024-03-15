@@ -9,12 +9,9 @@ export default function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<HomePage />}></Route>
-        <Route path="/auth/login" element={<LoginPage />}></Route>
-        <Route path="/auth/register" element={<RegisterPage />}></Route>
-
-        {/* Error pages */}
-        {/*<Route path="*" element={<Error404 />} />*/}
+          <Route path="/" element={<HomePage />}></Route>
+          <Route path="/auth/login" element={<LoginPage />}></Route>
+          <Route path="/auth/register" element={<RegisterPage />}></Route>
       </Routes>
     </>
   )

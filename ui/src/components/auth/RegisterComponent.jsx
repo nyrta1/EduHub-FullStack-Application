@@ -1,28 +1,22 @@
 import { useState } from 'react';
-import axios from 'axios';
+import {register} from "../../services/AuthService.js";
 
 export const RegisterComponent = () => {
-    const [formData, setFormData] = useState({
-        name: '',
-        surname: '',
-        username: '',
-        password: ''
-    });
+    const [name, setName] = useState('');
+    const [surname, setSurname] = useState('');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState(null);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            const response = await axios.post('http://localhost:8080/auth/register', formData);
-            console.log('Registration successful:', response.data);
+            await register(name, surname, username, password);
         } catch (error) {
-            console.error('Registration failed:', error);
+            console.error('Registration failed:', error.message);
+            setError('Registration failed:'+ error.message)
         }
-    };
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
     };
 
     return (
@@ -51,24 +45,25 @@ export const RegisterComponent = () => {
                             <form onSubmit={handleSubmit} className="form-box">
                                 <div className="row">
                                     <div className="col-12 mb-3">
-                                        <input name="name" type="text" value={formData.name} onChange={handleChange}
-                                               className="form-control" placeholder="Name"/>
+                                        <input name="name" type="text" className="form-control" placeholder="Name"
+                                               value={name} onChange={(e) => setName(e.target.value)}/>
                                     </div>
                                     <div className="col-12 mb-3">
-                                    <input name="surname" type="text" value={formData.surname}
-                                               onChange={handleChange} className="form-control" placeholder="Surname"/>
+                                    <input name="surname" type="text" className="form-control" placeholder="Surname"
+                                           value={surname} onChange={(e) => setSurname(e.target.value)}/>
                                     </div>
                                     <div className="col-12 mb-3">
-                                        <input name="username" type="text" value={formData.username}
-                                               onChange={handleChange} className="form-control" placeholder="Username"/>
+                                        <input name="username" type="text" className="form-control" placeholder="Username"
+                                               value={username} onChange={(e) => setUsername(e.target.value)}/>
                                     </div>
                                     <div className="col-12 mb-3">
-                                        <input name="password" type="password" value={formData.password}
-                                               onChange={handleChange} className="form-control" placeholder="Password"/>
+                                        <input name="password" type="password" className="form-control" placeholder="Password"
+                                               value={password} onChange={(e) => setPassword(e.target.value)}/>
                                     </div>
                                     <div className="col-12">
                                         <input type="submit" value="Register" className="btn btn-primary"/>
                                     </div>
+                                    {error && <div className="col-12 mt-3 text-danger">{error}</div>}
                                 </div>
                             </form>
                         </div>

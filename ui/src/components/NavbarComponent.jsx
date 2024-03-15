@@ -1,4 +1,24 @@
+import {useContext, useEffect, useState} from "react";
+import {AuthContext} from "./auth/AuthContext.jsx";
+
 export const NavbarComponent = () => {
+    const { isAuthenticatedRef } = useContext(AuthContext);
+    const [scrolled, setScrolled] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            // The optimal value for scroll is 71
+            const isScrolled = window.scrollY > 71;
+            setScrolled(isScrolled)
+        }
+
+        window.addEventListener('scroll', handleScroll)
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        }
+    }, []);
+
     return (
         <>
             <div className="site-mobile-menu">
@@ -24,16 +44,25 @@ export const NavbarComponent = () => {
                                     className="d-none d-lg-inline-block">info@mydomain.com</span></a>
                             </div>
 
-                            <div className="col-6 col-lg-3 text-right">
-                                <a href="/auth/login" className="small mr-3">
-                                    <span className="icon-lock"></span>
-                                    Log In
-                                </a>
-                                <a href="/auth/register" className="small">
-                                    <span className="icon-person"></span>
-                                    Register
-                                </a>
-                            </div>
+                            {isAuthenticatedRef.current ? (
+                                <div className="col-6 col-lg-3 text-right">
+                                    <a href="/auth/logout" className="small mr-3">
+                                        <span className="icon-remove"></span>
+                                        Logout
+                                    </a>
+                                </div>
+                            ) : (
+                                <div className="col-6 col-lg-3 text-right">
+                                    <a href="/auth/login" className="small mr-3">
+                                        <span className="icon-lock"></span>
+                                        Log In
+                                    </a>
+                                    <a href="/auth/register" className="small">
+                                        <span className="icon-person"></span>
+                                        Register
+                                    </a>
+                                </div>
+                            )}
 
                         </div>
                     </div>
@@ -41,8 +70,9 @@ export const NavbarComponent = () => {
                 <div className="sticky-nav js-sticky-header">
                     <div className="container position-relative">
                         <div className="site-navigation text-center">
-                            <a href="/" className="logo menu-absolute m-0">Learner<span
-                                className="text-primary">.</span></a>
+                            <a href="/" className="logo menu-absolute m-0">
+                                <img src={scrolled ? "/images/navbar-brand-black.png" : "/images/navbar-brand-white.png"} height="45" alt="Logo"/>
+                            </a>
 
                             <ul className="js-clone-nav d-none d-lg-inline-block site-menu">
                                 <li className="active"><a href="/">Home</a></li>

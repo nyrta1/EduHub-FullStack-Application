@@ -42,7 +42,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated())
                 .formLogin(formLogin -> formLogin
                         .loginProcessingUrl("/auth/login")
-                        .defaultSuccessUrl("http://localhost:5173")
+                        .successHandler()
                         .permitAll())
                 .logout(logout -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout"))

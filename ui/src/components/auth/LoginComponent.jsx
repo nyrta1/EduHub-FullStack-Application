@@ -1,4 +1,24 @@
+import {useContext, useState} from "react";
+import {login} from '../../services/AuthService.js'
+import {AuthContext} from "./AuthContext.jsx";
+
 export const LoginComponent = () => {
+    const { setAsLoggedIn } = useContext(AuthContext);
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState(null);
+
+    const handleSubmit = async () => {
+        event.preventDefault();
+
+        try {
+            await login(username, password)
+            setAsLoggedIn(true)
+        } catch (e) {
+            setError('Invalid username or password: ' + e.message)
+        }
+    }
+
     return (
         <>
             <div className="untree_co-hero inner-page overlay "
@@ -22,13 +42,13 @@ export const LoginComponent = () => {
                 <div className="container">
                     <div className="row mb-5 justify-content-center">
                         <div className="col-lg-5 mx-auto order-1" data-aos="fade-up" data-aos-delay="200">
-                            <form action="http://localhost:8080/auth/login" method="post" className="form-box">
+                            <form onSubmit={handleSubmit} className="form-box">
                                 <div className="row">
                                     <div className="col-12 mb-3">
-                                        <input name="username" type="text" className="form-control" placeholder="UserName"/>
+                                        <input name="username" type="text" className="form-control" placeholder="UserName" value={username} onChange={(e) => setUsername(e.target.value)}/>
                                     </div>
                                     <div className="col-12 mb-3">
-                                        <input name="password" type="password" className="form-control" placeholder="Password"/>
+                                        <input name="password" type="password" className="form-control" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
                                     </div>
 
                                     <div className="col-12 mb-3">
@@ -42,6 +62,8 @@ export const LoginComponent = () => {
                                     <div className="col-12">
                                         <input type="submit" value="Send Message" className="btn btn-primary"/>
                                     </div>
+
+                                    {error && <div className="col-12 mt-3 text-danger">{error}</div>}
                                 </div>
                             </form>
                         </div>
