@@ -1,5 +1,6 @@
 package com.nyrta1.eduhub.controller;
 
+import com.nyrta1.eduhub.config.security.customhandlers.CustomAuthenticationSuccessHandler;
 import com.nyrta1.eduhub.models.dto.RegistrationDTO;
 import com.nyrta1.eduhub.service.UserService;
 import jakarta.validation.Valid;

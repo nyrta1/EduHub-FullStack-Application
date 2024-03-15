@@ -1,5 +1,7 @@
-package com.nyrta1.eduhub.config;
+package com.nyrta1.eduhub.config.security;
 
+import com.nyrta1.eduhub.config.security.customhandlers.CustomAuthenticationFailureHandler;
+import com.nyrta1.eduhub.config.security.customhandlers.CustomAuthenticationSuccessHandler;
 import com.nyrta1.eduhub.service.impl.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -29,6 +31,8 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final UserDetailsServiceImpl userDetailsService;
+    private final CustomAuthenticationSuccessHandler successHandler;
+    private final CustomAuthenticationFailureHandler failureHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -42,7 +46,8 @@ public class SecurityConfig {
                         .anyRequest().authenticated())
                 .formLogin(formLogin -> formLogin
                         .loginProcessingUrl("/auth/login")
-                        .successHandler()
+                        .successHandler(successHandler)
+                        .failureHandler(failureHandler)
                         .permitAll())
                 .logout(logout -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout"))
