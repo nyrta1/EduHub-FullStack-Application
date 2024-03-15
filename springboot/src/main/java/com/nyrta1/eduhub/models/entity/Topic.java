@@ -9,24 +9,18 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
-@Entity(name = "roles")
+@Entity(name = "topics")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Role {
+public class Topic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
     private String name;
-
-    @NotNull
-    @ManyToMany(mappedBy = "roles")
-    private List<UserEntity> users = new ArrayList<>();
 
     @CreationTimestamp
     private LocalDateTime createdAt;
