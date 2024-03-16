@@ -10,6 +10,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -49,33 +50,15 @@ public class UserEntity {
         })
     private List<Role> roles;
 
-    // Teacher's courses many-to-many table
+    // Many-to-many for students courses
     @NotNull
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "teachers_courses",
-            joinColumns = {
-                    @JoinColumn(name = "teacher_id", referencedColumnName = "id")
-            },
-            inverseJoinColumns = {
-                    @JoinColumn(name = "course_id", referencedColumnName = "id")
-            }
-    )
-    private List<Course> teacherCourses;
+    @ManyToMany(mappedBy = "courseOwners")
+    private List<Course> courseOwners = new ArrayList<>();
 
-    // Student's courses many-to-many table
+    // Many-to-many for teachers courses
     @NotNull
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "students_courses",
-            joinColumns = {
-                    @JoinColumn(name = "student_id", referencedColumnName = "id")
-            },
-            inverseJoinColumns = {
-                    @JoinColumn(name = "course_id", referencedColumnName = "id")
-            }
-    )
-    private List<Course> studentCourses;
+    @ManyToMany(mappedBy = "followerCourses")
+    private List<Course> followerCourses = new ArrayList<>();
 
     // One-to-many user's comments table
     @OneToMany(

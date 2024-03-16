@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -17,6 +18,7 @@ import java.util.List;
 @Entity(name = "courses")
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,15 +41,33 @@ public class Course {
     )
     private List<Lesson> lessons = new ArrayList<>();
 
-    // Many-to-many for teachers courses
+    // Teacher's courses many-to-many table
     @NotNull
-    @ManyToMany(mappedBy = "teacherCourses")
-    private List<UserEntity> teachers = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "teachers_courses",
+            joinColumns = {
+                    @JoinColumn(name = "course_id", referencedColumnName = "id")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "teacher_id", referencedColumnName = "id")
+            }
+    )
+    private List<UserEntity> courseOwners;
 
-    // Many-to-many for students courses
+    // Student's courses many-to-many table
     @NotNull
-    @ManyToMany(mappedBy = "studentCourses")
-    private List<UserEntity> students = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "students_courses",
+            joinColumns = {
+                    @JoinColumn(name = "student_id", referencedColumnName = "id")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "course_id", referencedColumnName = "id")
+            }
+    )
+    private List<UserEntity> followerCourses;
 
     // Many-to-many for course topics
     @NotNull
